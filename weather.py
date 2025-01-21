@@ -11,17 +11,17 @@ def getdata(url):
     return r.text
 
 #storing url data into a variable and using the bs4 package to parse through the data.
-htmldata = getdata("https://weather.com/en-US/weather/today/l/32.8371,-97.0814?par=google&temp=c/")
+htmldata = getdata("https://weather.com/weather/today/l/d2f1e335ae7b8adab5b01cf7aae6511ad388c9a90c0d9d566855282b6031c688")
 soup = BeautifulSoup(htmldata, 'html.parser')
 print(soup.prettify())
 
-#filter for the required data
-current_temp = soup.find_all("span", class_="CurrentConditions--tempValue--3a50n")  # Update this class name
-chances_rain = soup.find_all("div", class_="CurrentConditions--precipValue--2aJSf")  # Update this class name
+# Filter for the required data
+current_temp = soup.find("span", class_="CurrentConditions--tempValue--zUBSz")  # Updated class name
+chances_rain = soup.find("div", class_="Column--precip--YkErk")  # Updated class name
 
 #Extracting the text from the found elements
-temp = current_temp[0].text if current_temp else "N/A" #Get the first element's text
-temp_rain = chances_rain[0].text if chances_rain else "N/A" #Get the first element's text
+temp = current_temp.text if current_temp else "N/A" #Get the first element's text
+temp_rain = chances_rain.text if chances_rain else "N/A" #Get the first element's text
 
 #prepare the result message
 result = f"Current Temperature in Euless, TX: {temp}\nChance  fo rain: {temp_rain}"
